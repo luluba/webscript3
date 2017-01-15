@@ -6,4 +6,4 @@ use Jinja2 to handle the module level
 Packages need to be installed:
 pip install aiohttp
 pip install jinja2
-pip install mysql-connector-python(SQL driver, remeber the root password carefully!)
+pip install mysql-connector(SQL driver, remeber the root password carefully!)
