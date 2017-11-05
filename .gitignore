@@ -1,5 +1,5 @@
 *.pyc
-*swp
+*.swp
 
 #Packages
 __pycache__
