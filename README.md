@@ -1,4 +1,4 @@
-# Webframe for KOGO 
+# Web Framework for KOGO 
 web app for kogo
 
 ## Dependency Packages
