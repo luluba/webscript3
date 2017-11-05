@@ -1,4 +1,3 @@
-
 class Config:
 	KOGO_MAIL_SENDER='Mandy Liu <mandyliu0305@gmail.com>'
 
