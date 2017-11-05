@@ -31,3 +31,25 @@ web app for kogo
 * requirement.txt: all the package dependencies to regenerate the same virtual environment
 * config.py: configuration settings
 * manage.py: launch the application and other tasks.
+
+## Generate Python Virtual Environment:
+* Create the python virtual environment
+```
+pip install virtualenv
+cd webscript3
+virtualenv venv
+```
+
+* Activate the virtual environment
+```
+source venv/bin/activate
+```
+* Replicate the virtual environment
+```
+pip install -r requirements.txt
+```
+* Update the virtual environment
+```
+pip freeze >requirements.txt
+git commit
+```
