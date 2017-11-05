@@ -1,5 +1,8 @@
-## Synopsis
+# Webframe for KOGO 
+web app for kogo
 
-##Packages
+## Dependency Packages
+```
 pip install flask
 pip install jinja2
+```
