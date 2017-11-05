@@ -1,4 +1,4 @@
-# Webframe for KOGO 
+# Web Framework for KOGO 
 web app for kogo
 
 ## Project Structure
@@ -8,10 +8,10 @@ web app for kogo
     |-templates/    
     |-static/    
     |-main/      
-      |-__init__.py      
+      |-__init__.py  (application constructor)     
       |-errors.py      
       |-forms.py      
-      |-views.py    
+      |-views.py  (flask routes)  
     |-__init__.py    
     |-email.py    
     |-models.py  
