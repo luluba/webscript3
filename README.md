@@ -53,3 +53,13 @@ pip install -r requirements.txt
 pip freeze >requirements.txt
 git commit
 ```
+## OAuth 2.0
+* [Credentials page]: Create authorization credentials
+```
+For testing, URIS: http://localhost:5000
+for redirect URIs: http://localhost:5000/oauth2callback
+```
+* Download client_secret.json file and store the file in a safe location
+
+
+[Credentials page]: https://console.developers.google.com/apis/credentials
