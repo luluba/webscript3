@@ -8,12 +8,14 @@ web app for kogo
     |-templates/    
     |-static/    
     |-main/      
-      |-__init__.py  (application constructor)     
+      |-__init__.py  (main blueprint)     
       |-errors.py      
       |-forms.py      
       |-views.py  (flask routes)  
-    |-__init__.py    
-    |-email.py    
+    |-auth/
+      |-__init__.py (auth blueprint)
+      |-views.py (the authorization views using oauth 2.0)
+    |-__init__.py (application constructor)  
     |-models.py  
  |-db/
  |-tests/    
