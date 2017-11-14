@@ -1,9 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Kogo Home</title>
-</head>
-<body>
-<p>Welcome to Kogo</p>
-</body>
-</html>
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Kogo{% endblock%}
+
+{% block head %}
+{{ super() }}
+{% endblock%}
+
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Kogo</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/signin">Signin</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome to Kogo!</h1>    
+</div>
+{% endblock %}
