@@ -5,6 +5,7 @@ import requests
 
 from apiclient import discovery
 from oauth2client import client
+from oauth2client.client import Storage
 import httplib2
 
 # This variable specifies the name of a file that contains the OAuth 2.0
@@ -36,6 +37,7 @@ def oauth2callback():
   #              credentials in a persistent database instead.
 
   credentials = flow.step2_exchange(code)
+
   flask.session['credentials'] = credentials.to_json()
 
   return flask.redirect(flask.url_for('.test_api_request'))
@@ -51,7 +53,9 @@ def test_api_request():
   http_auth = credentials.authorize(httplib2.Http())
   gmail = discovery.build(
       API_SERVICE_NAME, API_VERSION, credentials=credentials)
-
+  #TODO: store it in a database
+  emailAddress = gmail.users().getProfile(userId='me').execute().get('emailAddress', 'unknown')
+  
   results = gmail.users().labels().list(userId='me').execute()
   labels = results.get('labels', [])
 
