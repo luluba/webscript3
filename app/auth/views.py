@@ -2,12 +2,12 @@ from . import auth
 import os
 import flask
 import requests
-
+from flask_login import current_user, login_user, logout_user
 from apiclient import discovery
 from oauth2client import client
 from oauth2client.client import Storage
 import httplib2
-
+from ..utils import User
 # This variable specifies the name of a file that contains the OAuth 2.0
 # information for this authlication, including its client_id and client_secret.
 CLIENT_SECRETS_FILE = "client_secret.json"
@@ -26,6 +26,10 @@ def signin():
 
 	return flask.redirect(auth_uri)
 
+@auth.route('/signout')
+def signout():
+	pass
+
 @auth.route('/oauth2callback')
 def oauth2callback():
   flow = client.flow_from_clientsecrets(CLIENT_SECRETS_FILE, scope=SCOPES, redirect_uri=flask.url_for('.oauth2callback', _external=True))
@@ -40,7 +44,22 @@ def oauth2callback():
 
   flask.session['credentials'] = credentials.to_json()
 
-  return flask.redirect(flask.url_for('.test_api_request'))
+  gmail = discovery.build(
+      API_SERVICE_NAME, API_VERSION, credentials=credentials)
+  #TODO: store it in a database
+  emailAddress = gmail.users().getProfile(userId='me').execute().get('emailAddress', 'unknown')
+
+  #TODO, hack, use use LoginManager 
+  user = User()
+  user.username = emailAddress
+  user.id =2 
+
+  login_user(user)
+
+  next = flask.request.args.get('next')
+
+  print(current_user.is_authenticated)
+  return flask.redirect(flask.url_for('main.index'))
 
 @auth.route('/test')
 def test_api_request():
