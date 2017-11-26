@@ -50,10 +50,9 @@ def oauth2callback():
 
     flask.session['credentials'] = credentials.to_json()
 
-    gmail = discovery.build(
-    API_SERVICE_NAME, API_VERSION, credentials=credentials)
+    gmail_svc = discovery.build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
     #TODO: store it in a database
-    emailAddress = gmail.users().getProfile(userId='me').execute().get('emailAddress', 'unknown')
+    emailAddress = gmail_svc.users().getProfile(userId='me').execute().get('emailAddress', 'unknown')
 
     #TODO, hack, use use LoginManager
     user = User()
@@ -77,12 +76,12 @@ def test_api_request():
     credentials = client.OAuth2Credentials.from_json(flask.session['credentials'])
 
     http_auth = credentials.authorize(httplib2.Http())
-    gmail = discovery.build(
+    gmail_svc = discovery.build(
       API_SERVICE_NAME, API_VERSION, credentials=credentials)
     #TODO: store it in a database
-    emailAddress = gmail.users().getProfile(userId='me').execute().get('emailAddress', 'unknown')
+    emailAddress = gmail_svc.users().getProfile(userId='me').execute().get('emailAddress', 'unknown')
   
-    results = gmail.users().labels().list(userId='me').execute()
+    results = gmail_svc.users().labels().list(userId='me').execute()
     labels = results.get('labels', [])
 
     # Save credentials back to session in case access token was refreshed.
@@ -103,7 +102,7 @@ def list_order():
     gmail_svc = discovery.build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
     # Get email ids
-    response = gmail_svc.users().messages().list(userId="me", maxResults=10).execute()
+    response = gmail_svc.users().messages().list(userId="me", maxResults=100).execute()
     message_ids = []
     if 'messages' in response:
         message_ids.extend(response['messages'])
