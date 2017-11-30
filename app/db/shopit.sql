@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE user
 (
     id                  varchar(255) NOT NULl,
-    username            varchar(20) NOT NULL,    # main email address serve as username
+    primary_email       varchar(255) NOT NULL,    # main email address serve as username
     ip                  varchar(20) NOT NULL,
     device              varchar(50) NOT NULL,
 
