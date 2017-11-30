@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS auth;
 CREATE TABLE auth
 (
     id                  varchar(255) NOT NULL,
-    email               varchar(20)  NOT NULL,
+    email               varchar(255)  NOT NULL,
     credential          varchar(1000),
     FOREIGN KEY (id)
     REFERENCES user(id)
@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order`
 (
     id                  varchar(255) NOT NULL,
-    email               varchar(20)  NOT NULL,
+    email               varchar(255)  NOT NULL,
     last_order          datetime,
     FOREIGN KEY (id)
     REFERENCES user(id)
