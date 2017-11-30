@@ -114,7 +114,7 @@ def list_order():
         mime_message_summary = email_utils.get_mime_message(message)
         # Find and add order information
         order_info = order.find_order_info(mime_message_summary)
-        if order_info:
+        if order_info.get("is_order"):
             order_infos.append(order_info)
 
     return flask.jsonify(*order_infos)
