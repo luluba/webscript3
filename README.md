@@ -65,3 +65,9 @@ for redirect URIs: http://localhost:5000/oauth2callback
 
 
 [Credentials page]: https://console.developers.google.com/apis/credentials
+
+## MySQL database
+```
+create database shopit;
+source path/to/shopit.sql
+```
