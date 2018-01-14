@@ -16,11 +16,10 @@ web app for kogo
       |-__init__.py (auth blueprint)
       |-views.py (the authorization views using oauth 2.0)
     |-__init__.py (application constructor)  
-    |-models.py  
+    |-models.py ( sqlalchemy )
  |-db/
  |-tests/    
    |-__init__.py  
-   |-test*.py
  |-venv/  
  |-requirements.txt  
  |-config.py  
