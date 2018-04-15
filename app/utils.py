@@ -14,7 +14,6 @@ class User(UserMixin):
 	
 @login_manager.user_loader
 def load_user(user_id):
-  print(user_id)
   if user_id in mapping:
     user = User()
     user.username = mapping[user_id]["username"]

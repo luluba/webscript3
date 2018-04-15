@@ -26,11 +26,11 @@ API_VERSION = 'v1'
 
 @auth.route('/signin')
 def signin():
- #Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
-	flow = client.flow_from_clientsecrets(CLIENT_SECRETS_FILE, scope=SCOPES, redirect_uri=flask.url_for('.oauth2callback', _external=True))
-	auth_uri = flow.step1_get_authorize_url()
+    #Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
+    flow = client.flow_from_clientsecrets(CLIENT_SECRETS_FILE, scope=SCOPES, redirect_uri=flask.url_for('.oauth2callback', _external=True))
+    auth_uri = flow.step1_get_authorize_url()
 
-	return flask.redirect(auth_uri)
+    return flask.redirect(auth_uri)
 
 @auth.route('/signout')
 def signout():
@@ -53,17 +53,7 @@ def oauth2callback():
     gmail_svc = discovery.build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
     #TODO: store it in a database
     emailAddress = gmail_svc.users().getProfile(userId='me').execute().get('emailAddress', 'unknown')
-
-    #TODO, hack, use use LoginManager
-    user = User()
-    user.username = emailAddress
-    user.id =2
-
-    login_user(user)
-
-    next = flask.request.args.get('next')
-
-    print(current_user.is_authenticated)
+    print(emailAddress)
     return flask.redirect(flask.url_for('main.index'))
 
 
@@ -119,30 +109,22 @@ def list_order():
 
     return flask.jsonify(*order_infos)
 
-'''
 @auth.route('/revoke')
 def revoke():
   if 'credentials' not in flask.session:
     return ('You need to <a href="/authorize">authorize</a> before ' +
             'testing the code to revoke credentials.')
-
-  credentials = google.oauth2.credentials.Credentials(
-    **flask.session['credentials'])
-
-  revoke = requests.post('https://accounts.google.com/o/oauth2/revoke',
-      params={'token': credentials.token},
-      headers = {'content-type': 'authlication/x-www-form-urlencoded'})
-
-  status_code = getattr(revoke, 'status_code')
-  if status_code == 200:
-    return('Credentials successfully revoked.')
-  else:
-    return('An error occurred.')
-
+  credentials = client.OAuth2Credentials.from_json(flask.session['credentials'])
+  if not credentials.refresh_token:
+      try:
+        credentials.revoke(httplib2.Http())
+      except Exception:
+        response = requests.get(
+                credentials.revoke_uri + '?token=' + credentials.access_token)
+  return ("Credentials have been revoked.<br><br>")
 
 @auth.route('/clear')
 def clear_credentials():
   if 'credentials' in flask.session:
     del flask.session['credentials']
   return ('Credentials have been cleared.<br><br>')
-'''
