@@ -13,8 +13,6 @@ from ..utils import User
 
 import sys
 
-lib_path = os.path.abspath("../../../../kogo")
-sys.path.append(lib_path)
 from kogo.general import email_utils 
 from kogo.process import order
 
