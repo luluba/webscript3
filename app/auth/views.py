@@ -112,11 +112,8 @@ def list():
         if order_info.get("is_order"):
             del order_info["is_order"]
             order_infos.append(order_info)
-
     input = {
         "your orders": order_infos
     } 
     output = json2html.convert(json=input)
     return output 
-
-
