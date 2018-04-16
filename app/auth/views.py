@@ -12,7 +12,9 @@ from json2html import *
 from ..utils import User
 
 import sys
-sys.path.append('/home/mandy/workspace/kogo')
+
+lib_path = os.path.abspath("../../../../kogo")
+sys.path.append(lib_path)
 from kogo.general import email_utils 
 from kogo.process import order
 
@@ -59,8 +61,6 @@ def oauth2callback():
     credentials = flow.step2_exchange(code)
     flask.session['credentials'] = credentials.to_json()
 
-    #gmail_svc = discovery.build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
-    #emailAddress = gmail_svc.users().getProfile(userId='me').execute().get('emailAddress', 'unknown')
     return flask.redirect('list')
 
 
