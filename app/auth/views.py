@@ -8,11 +8,13 @@ from apiclient import discovery
 from oauth2client import client
 from oauth2client.client import Storage
 import httplib2
+from json2html import *
 from ..utils import User
 
-from kogo.general import email_utils
-from kogo.process import order
+import sys
 
+from kogo.general import email_utils 
+from kogo.process import order
 
 # This variable specifies the name of a file that contains the OAuth 2.0
 # information for this authlication, including its client_id and client_secret.
@@ -57,9 +59,7 @@ def oauth2callback():
     credentials = flow.step2_exchange(code)
     flask.session['credentials'] = credentials.to_json()
 
-    #gmail_svc = discovery.build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
-    #emailAddress = gmail_svc.users().getProfile(userId='me').execute().get('emailAddress', 'unknown')
-    return flask.redirect('list_order')
+    return flask.redirect('list')
 
 
 @auth.route('/revoke')
@@ -86,8 +86,8 @@ def clear_credentials():
         del flask.session['credentials']
     return ('Credentials have been cleared.<br><br>')
 
-@auth.route('/list_order')
-def list_order():
+@auth.route('/list')
+def list():
     if 'credentials' not in flask.session:
         return flask.redirect('authorize')
     # Load credentials from the session.
@@ -108,8 +108,10 @@ def list_order():
         # Find and add order information
         order_info = order.find_order_info(mime_message_summary)
         if order_info.get("is_order"):
+            del order_info["is_order"]
             order_infos.append(order_info)
-   
-    return flask.jsonify(*order_infos)
-
-
+    input = {
+        "your orders": order_infos
+    } 
+    output = json2html.convert(json=input)
+    return output 
